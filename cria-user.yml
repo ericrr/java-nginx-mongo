@@ -1,0 +1,23 @@
+# target hostname or group name
+- hosts: homolog
+
+# Tarefas que serão executadas no servidor
+  vars:
+    # created with:
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+    password: $6$Tcf8P/To/YLnW.ly$CJTgEa90mNOEpjNX6AGKRSZff7/DPIdbDU0nMowf9YfjS0RHXJGjdKQBNyV1qa8ID7Sf/f1AE5/LBIVuKKRwy0
+
+  tasks:
+
+    - name: instala libselinux
+      yum: name=libselinux-python state=installed
+
+    - user: name=suporte password={{password}}
+
+    - name: Create sudoers file backup
+      command: cp -f /etc/sudoers /etc/sudoers.bak
+
+    - name: Adiciona usuario suporte 
+      lineinfile: dest=/etc/sudoers state=present line='suporte ALL=(ALL) ALL'
+#      lineinfile: dest=/etc/sudoers state=present line='suporte ALL=(ALL) ALL' validate='visudo -cf $s'
+

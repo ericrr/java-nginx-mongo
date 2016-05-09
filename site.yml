@@ -1,0 +1,9 @@
+- name: Deploy de requisitos aplicacao ZUP
+  hosts: homolog
+  remote_user: suporte
+  become: yes
+  become_method: sudo
+  roles:
+    - util
+    - nginx
+    - mongodb

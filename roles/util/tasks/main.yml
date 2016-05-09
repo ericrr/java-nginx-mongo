@@ -1,0 +1,25 @@
+---
+# tasks file for util
+
+
+# Pacote necessario para Selinux
+- name: instala libselinux
+  yum: name=libselinux-python state=installed
+
+# Repositorio do EPEL
+- name: Repositorio EPEL
+  yum: name=epel-release.noarch state=installed
+
+- name: Install wget
+  yum: name=wget state=installed
+
+# Firewall para aplicacoes WEB
+- copy: src=files/iptables dest=/etc/sysconfig/iptables owner=root group=root mode=0600
+
+- name: Relete as regras do Firewall
+  command: /etc/init.d/iptables restart
+
+# Verifica se o Pacote OpenJDK ja esta instalado
+- name: Install OpenJDK
+  yum: name=java-1.8.0-openjdk state=installed
+

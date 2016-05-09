@@ -1,0 +1,15 @@
+---
+# tasks file for mongodb
+
+# Copia repositorio MongoDB
+- copy: src=files/mongodb.repo dest=/etc/yum.repos.d/ owner=root group=root mode=0644
+
+# Pacotes de Instalacao do MongoDB
+- name: Instalacao do MongoDB
+  yum: pkg={{item}} state=lastet
+  with_items:
+   - mongo-10gen
+   - mongo-10gen-server
+
+# Criar database mongoDB
+- mongodb_user: database=ZupDB name=userzup password=123mudar state=present
